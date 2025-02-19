@@ -47,7 +47,7 @@ const display = {
 }
 
 const mailchimp = {
-    action: 'https://paragraph.xyz/@omniai/subscribe',
+    action: 'https://coinvestinc.medium.com/subscribe',
     effects: {
         gradient: true,
         dots:     false,
