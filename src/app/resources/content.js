@@ -35,7 +35,7 @@ const social = [
     {
         name: 'X',
         icon: 'x',
-        link: '',
+        link: 'https://x.com/omniai_ai',
     },
     {
         name: 'Email',

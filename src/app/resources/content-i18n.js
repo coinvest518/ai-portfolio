@@ -16,7 +16,8 @@ const createI18nContent = (t) => {
     const newsletter = {
         display: true,
         title: <>{t("newsletter.title", {firstName: person.firstName})}</>,
-        description: <>{t("newsletter.description")}</>
+        description: <>{t("newsletter.description")}</>,
+        link: t("newsletter.link"),
     }
 
     const social = [
@@ -35,7 +36,7 @@ const createI18nContent = (t) => {
         {
             name: 'X',
             icon: 'x',
-            link: '',
+            link: 'https://x.com/omniai_ai',
         },
         {
             name: 'Email',

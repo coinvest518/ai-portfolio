@@ -53,8 +53,7 @@ export default function Work(
         <Flex
 			fillWidth maxWidth="m"
 			direction="column">
-            <script
-                type="application/ld+json"
+            <script type="application/ld+json"
                 suppressHydrationWarning
                 dangerouslySetInnerHTML={{
                     __html: JSON.stringify({

@@ -1,14 +1,14 @@
 import { Flex, Heading } from '@/once-ui/components';
-import { Mailchimp } from '@/components';
 import { Posts } from '@/components/blog/Posts';
-import { baseURL, renderContent } from '@/app/resources'
+import { baseURL, renderContent } from '@/app/resources';
 import { getTranslations, unstable_setRequestLocale } from 'next-intl/server';
+import React from 'react';
+import Link from 'next/link';
 
 export async function generateMetadata(
-	{params: {locale}}: { params: { locale: string }}
+	{ params: { locale } }: { params: { locale: string } }
 ) {
-
-	const t = await getTranslations();
+	const t = await getTranslations(locale);
 	const { blog } = renderContent(t);
 
 	const title = blog.title;
@@ -40,16 +40,14 @@ export async function generateMetadata(
 }
 
 export default function Blog(
-	{ params: {locale}}: { params: { locale: string }}
+	{ params: { locale } }: { params: { locale: string } }
 ) {
 	unstable_setRequestLocale(locale);
 
-	const { person, blog, newsletter } = renderContent();
-    return (
-        <Flex
-			fillWidth maxWidth="s"
-			direction="column">
-            <script
+	const { person, blog, newsletter } = renderContent(locale);
+	return (
+		<Flex fillWidth maxWidth="s" direction="column">
+			<script
 				type="application/ld+json"
 				suppressHydrationWarning
 				dangerouslySetInnerHTML={{
@@ -63,7 +61,7 @@ export default function Blog(
 						author: {
 							'@type': 'Person',
 							name: person.name,
-                            image: {
+							image: {
 								'@type': 'ImageObject',
 								url: `${baseURL}${person.avatar}`,
 							},
@@ -71,19 +69,18 @@ export default function Blog(
 					}),
 				}}
 			/>
-            <Heading
-                marginBottom="l"
-                variant="display-strong-s">
-                {blog.title}
-            </Heading>
-			<Flex
-				fillWidth flex={1} direction="column">
-				<Posts range={[1,3]} locale={locale}/>
-				<Posts range={[4]} columns="2" locale={locale}/>
+			<Heading marginBottom="l" variant="display-strong-s">
+				{blog.title}
+			</Heading>
+			<Flex fillWidth flex={1} direction="column">
+				<Posts range={[1, 3]} locale={locale} />
+				<Posts range={[4]} columns="2" locale={locale} />
 			</Flex>
-            {newsletter.display && (
-                <Mailchimp newsletter={newsletter} />
-            )}
-        </Flex>
-    );
+			{newsletter.display && 'link' in newsletter && (
+				<Link href={newsletter.link} target="_blank" rel="noopener noreferrer">
+					Subscribe on Medium
+				</Link>
+			)}
+		</Flex>
+	);
 }
