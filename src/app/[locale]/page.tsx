@@ -7,6 +7,7 @@ import { getTranslations, unstable_setRequestLocale } from 'next-intl/server';
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import SubscribeSection from './SubscribeSection';
+import ShowcaseSection from '@/components/showcase/ShowcaseSection';
 
 export async function generateMetadata(
 	{ params: { locale } }: { params: { locale: string } }
@@ -120,6 +121,9 @@ export default function Home(
 				</Flex>
 			</Flex>
 			<RevealFx translateY="16" delay={0.6}>
+				<ShowcaseSection />
+			</RevealFx>
+			<RevealFx translateY="16" delay={0.8}>
 				<Projects range={[1, 1]} locale={locale} />
 			</RevealFx>
 			{routes['/blog'] && (

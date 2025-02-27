@@ -9,8 +9,8 @@ import {
 	HiOutlineArrowPath,
 	HiCheck,
 	HiMiniQuestionMarkCircle,
-	HiMiniXMark,
 	HiOutlineLink,
+	HiMiniXMark,
 	HiExclamationTriangle,
 	HiInformationCircle,
 	HiExclamationCircle,
@@ -25,7 +25,21 @@ import {
 	PiUserCircleDuotone,
 	PiGridFourDuotone,
 	PiBookBookmarkDuotone,
-	PiImageDuotone
+	PiImageDuotone,
+	PiRobotDuotone,
+	PiChartBarDuotone,
+	PiSparkleLight,
+	PiFileTextDuotone,
+	PiPaintBrushDuotone,
+	PiMicrophoneStageDuotone,
+	PiHeadphonesDuotone,
+	PiShareNetworkDuotone,
+	PiArrowRightDuotone,
+	PiStarDuotone,
+	PiBrainDuotone,
+	PiCodeDuotone,
+	PiDatabaseDuotone,
+	PiRocketLaunchDuotone
 } from "react-icons/pi";
 
 import {
@@ -62,4 +76,23 @@ export const iconLibrary: Record<string, IconType> = {
 	github: FaGithub,
 	linkedin: FaLinkedin,
 	x: FaXTwitter,
+	
+	// New icons for showcase
+	share: PiShareNetworkDuotone,
+	messageSquare: PiRobotDuotone,
+	trendingUp: PiChartBarDuotone,
+	sparkles: PiSparkleLight,
+	image: PiImageDuotone,
+	mic: PiMicrophoneStageDuotone,
+	bot: PiRobotDuotone,
+	barChart: PiChartBarDuotone,
+	fileText: PiFileTextDuotone,
+	palette: PiPaintBrushDuotone,
+	headphones: PiHeadphonesDuotone,
+	arrowRight: PiArrowRightDuotone,
+	star: PiStarDuotone,
+	brain: PiBrainDuotone,
+	code: PiCodeDuotone,
+	database: PiDatabaseDuotone,
+	rocket: PiRocketLaunchDuotone
 };

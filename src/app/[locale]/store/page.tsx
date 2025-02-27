@@ -1,6 +1,7 @@
 import { getTranslations, unstable_setRequestLocale } from "next-intl/server"
 import StoreContent from './store-content'
 import { Product } from './types'
+import { baseURL } from "@/app/resources"
 
 interface PageProps {
   params: {
@@ -10,11 +11,33 @@ interface PageProps {
 
 // Metadata generation (server-side)
 export async function generateMetadata({ params: { locale } }: PageProps) {
-  const t = await getTranslations('store')
+  const t = await getTranslations(locale);
+  const title = t('store.title');
+  const description = t('store.description');
+  const ogImage = `https://${baseURL}/og?title=${encodeURIComponent(title)}`;
+
   return {
-    title: t('title'),
-    description: t('description')
-  }
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      type: 'website',
+      url: `https://${baseURL}/${locale}/store`,
+      images: [
+        {
+          url: ogImage,
+          alt: title,
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      images: [ogImage],
+    },
+  };
 }
 
 // Server Component wrapper
