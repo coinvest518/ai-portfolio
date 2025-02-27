@@ -71,17 +71,19 @@
         "description": "Design and dev projects by {name}"
     },
     "store": {
-        "label": "Shop",
-        "title": "Shop Merchandise",
-        "description": "Our Product Collection {name}"
+        "label": "Store",
+        "title": "Digital Products",
+        "description": "Explore my collection of digital products and resources",
+        "downloadButton": "Download",
+        "visitButton": "Visit",
+        "free": "Free",
+        "paid": "${price}",
+        "comingSoon": "Coming Soon"
     },
-
-
-        "products": {
-            "title": "Our Products",
-            "description": "Explore our range of products."
-        },
-    
+    "products": {
+        "title": "Our Products",
+        "description": "Explore our range of products."
+    },
     "projectCard": {
         "label": "Read Case Study"
     }

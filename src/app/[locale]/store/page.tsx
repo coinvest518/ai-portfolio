@@ -1,135 +1,121 @@
-import { Flex, Grid, Text } from "@/once-ui/components";
-import { baseURL } from "@/app/resources";
-import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
-import Image from "next/image";
-import Link from "next/link";
+import { getTranslations, unstable_setRequestLocale } from "next-intl/server"
+import StoreContent from './store-content'
+import { Product } from './types'
 
-// Define Product type
-interface Product {
-    id: string;
-    title: string;
-    description: string;
-    imageSrc: string;
-    price: number;
-    buyButtonLink: string;
+interface PageProps {
+  params: {
+    locale: string
+  }
 }
 
+// Metadata generation (server-side)
+export async function generateMetadata({ params: { locale } }: PageProps) {
+  const t = await getTranslations('store')
+  return {
+    title: t('title'),
+    description: t('description')
+  }
+}
+
+// Server Component wrapper
+export default async function Page({ params }: PageProps) {
+  unstable_setRequestLocale(params.locale)
+  const products = await fetchProducts()
+  return <StoreContent products={products} locale={params.locale} />
+}
+
+// Keep the fetchProducts function server-side
 async function fetchProducts(): Promise<Product[]> {
-
-    return [
-        {
-            id: "1",
-            title: "Magical Artifact",
-            description: "A powerful mystical object with unknown origins",
-            imageSrc: "/images/gallery/img-01.jpg",
-            price: 299.99,
-            buyButtonLink: "/checkout/1",
-        },
-        {
-            id: "2", 
-            title: "Enchanted Scroll",
-            description: "Ancient wisdom captured in a delicate scroll",
-            imageSrc: "/images/", 
-            price: 129.50,
-            buyButtonLink: "/checkout/2",
-        }
-    ];
-}
-
-export async function generateMetadata({ params: { locale } }: { params: { locale: string } }) {
-    const t = await getTranslations("products");
-    const title = t("title");
-    const description = t("description");
-    const ogImage = `https://${baseURL}/og?title=${encodeURIComponent(title)}`;
-
-    return {
-        title,
-        description,
-        openGraph: {
-            title,
-            description,
-            type: 'website',
-            url: `https://${baseURL}/${locale}/store`,
-            images: [{ url: ogImage, alt: title }],
-        },
-        twitter: {
-            card: 'summary_large_image',
-            title,
-            description,
-            images: [ogImage],
-        },
-    };
-}
-
-// Main Products component
-export default async function ProductsPage({ params: { locale } }: { params: { locale: string } }) {
-    // Set the request locale for internationalization
-    unstable_setRequestLocale(locale);
-    
-    // Fetch translations and products
-    const t = await getTranslations("products");
-    const products = await fetchProducts();
-
-    return (
-        <Flex fillWidth padding="24">
-            <script
-                type="application/ld+json"
-                suppressHydrationWarning
-                dangerouslySetInnerHTML={{
-                    __html: JSON.stringify({
-                        "@context": "https://schema.org",
-                        "@type": "WebPage",
-                        "name": t("title"),
-                        "description": t("description"),
-                        "mainEntity": {
-                            "@type": "Product",
-                            "name": t("title"),
-                            "offers": products.map((product) => ({
-                                "@type": "Offer",
-                                "price": product.price,
-                                "priceCurrency": "USD",
-                                "availability": "https://schema.org/InStock",
-                                "url": `${baseURL}${product.buyButtonLink}`
-                            }))
-                        }
-                    }),
-                }}
-            />
-
-            <Grid columns="3col" gap="24" tabletColumns="2col" mobileColumns="1col">
-                {products.map((product) => (
-                    <Flex 
-                        key={product.id} 
-                        direction="column" 
-                        background="neutral-weak" 
-                        padding="16" 
-                        radius="l"
-                    >
-                        <Image 
-                            src={product.imageSrc} 
-                            alt={product.title} 
-                            width={300} 
-                            height={200} 
-                            style={{ objectFit: 'contain' }}
-                        />
-                        <Text variant="body-strong-m" onBackground="neutral-strong">
-                            {product.title}
-                        </Text>
-                        <Text variant="body-default-m" onBackground="neutral-medium">
-                            {product.description}
-                        </Text>
-                        <Text variant="body-strong-s" onBackground="neutral-medium">
-                            Price: ${product.price.toFixed(2)}
-                        </Text>
-                        <Link 
-                            href={product.buyButtonLink} 
-                            className="Button_button__ROudt Button_primary__vsG5A Button_s__EYzdP Button_fitContent__f8yCD"
-                        >
-                            Buy Now
-                        </Link>
-                    </Flex>
-                ))}
-            </Grid>
-        </Flex>
-    );
+  return [
+    {
+      id: "1",
+      title: "AI Art Prompt Template",
+      description:
+        "Create stunning visuals! Unlock your creative potential with my AI art prompt template, designed to help you craft unique visuals effortlessly!",
+      imageSrc: "/images/ai-art-template.png",
+      price: 0,
+      buyButtonLink: "https://theleap.co/@coinvest/digital_download/ai-art-prompt-template-create-stunning-visuals",
+      type: "Digital download",
+    },
+    {
+      id: "2",
+      title: "Build Your Own Chatbot: AI for Everyone!",
+      description:
+        "Eager to dive into AI and coding? Join my course to create your very own chatbot app from scratch and unlock new tech skills!",
+      imageSrc: "/images/chatbot-course.png",
+      price: 0,
+      buyButtonLink: "https://theleap.co/@coinvest/digital_download/build-your-own-chatbot-ai-for-everyone",
+      type: "Digital download",
+    },
+    {
+      id: "3",
+      title: "Try Omni Ai - Ai Multi Chat",
+      description:
+        "Omni AI is a cutting-edge Generative AI suite. Imagine harnessing the power of not just one AI but a whole ensemble. Chat with all top AI systems in one.",
+      imageSrc: "/images/omni-ai.jpg",
+      price: 0,
+      buyButtonLink: "https://omniai.icu",
+      type: "External link",
+    },
+    {
+      id: "4",
+      title: "Viral GPT Prompt : 30 Days Evergreen Content",
+      description:
+        " Create viral-worthy content without the struggle! This AI-powered Notion template helps you plan 30 days of consistent, high-quality posts.",
+      imageSrc: "/images/viral-gpt.png",
+      price: 0,
+      buyButtonLink: "#",
+      type: "Digital download",
+    },
+    {
+      id: "5",
+      title: "Consistent Characters Guide- MidJourney and GPTs",
+      description:
+        " Create Flawless, Consistent Characters with Ease! Unlock the secrets of character consistency in our mini-course!",
+      imageSrc: "/images/character-guide.jpg",
+      price: 0,
+      buyButtonLink: "#",
+      type: "Digital download",
+    },
+    {
+      id: "6",
+      title: "Coming Soon: AI Business Strategy Guide",
+      description:
+        "Learn how to integrate AI into your business strategy. A comprehensive guide for entrepreneurs and business leaders.",
+      imageSrc: "/placeholder.svg",
+      price: 0,
+      buyButtonLink: "#",
+      type: "Digital download",
+    },
+    {
+      id: "7",
+      title: "Coming Soon: Advanced Prompt Engineering",
+      description:
+        "Master the art of prompt engineering. Learn advanced techniques to get the best results from AI language models.",
+      imageSrc: "/placeholder.svg",
+      price: 0,
+      buyButtonLink: "#",
+      type: "Digital download",
+    },
+    {
+      id: "8",
+      title: "Coming Soon: AI Marketing Automation",
+      description:
+        "Automate your marketing workflows with AI. From content creation to campaign optimization.",
+      imageSrc: "/placeholder.svg",
+      price: 0,
+      buyButtonLink: "#",
+      type: "Digital download",
+    },
+    {
+      id: "9",
+      title: "Coming Soon: AI Development Tools",
+      description:
+        "A curated collection of AI development tools and resources for building next-generation applications.",
+      imageSrc: "/placeholder.svg",
+      price: 0,
+      buyButtonLink: "#",
+      type: "Digital download",
+    }
+  ]
 }
